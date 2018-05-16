@@ -1,0 +1,17 @@
+﻿<Window x:Class="DesktopContacts.NewContactWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DesktopContacts"
+        mc:Ignorable="d"
+        Title="NewContactWindow" Height="300" Width="300">
+    <Grid>
+        <StackPanel>
+            <TextBox Margin="0,0,0,5" x:Name="txtBoxName"/>
+            <TextBox Margin="0,0,0,5" x:Name="txtBoxEmail"/>
+            <TextBox Margin="0,0,0,5" x:Name="txtBoxPhone"/>
+            <Button Content="Save" x:Name="btnSave" Click="btnSave_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
