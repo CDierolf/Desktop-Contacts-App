@@ -18,7 +18,10 @@ namespace DesktopContacts.classes
 
         public string Phone { get; set; }
 
-
+        public override string ToString()
+        {
+            return $"{Name} - {Email} - {Phone}";
+        }
 
     }
 }

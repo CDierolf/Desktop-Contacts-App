@@ -22,9 +22,13 @@ namespace DesktopContacts
     /// </summary>
     public partial class MainWindow : Window
     {
+        List<Contact> contacts;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            contacts = new List<Contact>();
             
             ReadDatabase();
         }
@@ -32,7 +36,7 @@ namespace DesktopContacts
         private void btnNewContact_Click(object sender, RoutedEventArgs e)
         {
             NewContactWindow newContactWindow = new NewContactWindow();
-            newContactWindow.Show();
+            newContactWindow.ShowDialog();
 
             ReadDatabase();
         }
@@ -42,8 +46,38 @@ namespace DesktopContacts
             using (SQLite.SQLiteConnection conn = new SQLiteConnection(App.databasePath))
             {
                 conn.CreateTable<Contact>();
-                var contacts = conn.Table<Contact>().ToList();
+                contacts = conn.Table<Contact>().ToList().OrderBy(c => c.Name).ToList();
+
+                // Order by and where example in LINQ
+                //var filteredList2 = from c2 in contacts
+                //                    where c2.Name.ToLower().Contains(txtBoxSearch.Text.ToLower())
+                //                    orderby c2.Name
+                //                    select c2;
+
             }
+            if (contacts != null)
+            {
+                // Have to clear each time ReadDatabase is called
+                //foreach (var c in contacts)
+                //{
+                //    lstViewContacts.Items.Add(new ListViewItem()
+                //    {
+
+                //        Content = c
+                //    });
+                //}
+
+                // Easier way.
+                lstViewContacts.ItemsSource = contacts;
+            }
+        }
+
+        private void txtBoxSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox txtBoxSearch = sender as TextBox;
+
+            var filteredList = contacts.Where(c => c.Name.ToLower().Contains(txtBoxSearch.Text.ToLower())).ToList();
+            lstViewContacts.ItemsSource = filteredList;
         }
     }
 }
